@@ -1,0 +1,60 @@
+@page "/event/{Name}"
+@using EventEaseApp.Services
+@inject EventService EventService
+
+<div class="card event-card">
+    <div class="card-body">
+        <h5 class="card-title">@Name</h5>
+        <p class="card-text"><strong>Date:</strong> @Date.ToString("MMMM d, yyyy")</p>
+        <p class="card-text"><strong>Location:</strong> @Location</p>
+    </div>
+    <div class="card-footer">
+        <div class="participant-tracker mb-3">
+            <h6>Participant Tracker</h6>
+            @if (Participants != null && Participants.Any())
+            {
+                <table class="table table-sm mb-2">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Participants)
+                        {
+                            <tr>
+                                <td>@p.Name</td>
+                                <td>@p.Email</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-muted">No participants yet.</div>
+            }
+        </div>
+        <NavLink class="btn btn-sm btn-outline-secondary me-2" href="@($"/register/{Uri.EscapeDataString(Name)}")">Register</NavLink>
+        <NavLink href="/" class="btn btn-primary">Return to Home Page</NavLink>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "Unnamed Event";
+
+    [Parameter]
+    public DateTime Date { get; set; } = DateTime.Now;
+
+    [Parameter]
+    public string Location { get; set; } = "TBD";
+
+    private IEnumerable<Participant> Participants = Enumerable.Empty<Participant>();
+
+    protected override void OnParametersSet()
+    {
+        Participants = EventService.GetParticipants(Name);
+    }
+}

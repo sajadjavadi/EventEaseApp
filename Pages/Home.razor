@@ -1,0 +1,53 @@
+﻿@page "/"
+@using System.Linq
+@using EventEaseApp.Services
+@inject EventService EventService
+@inject Microsoft.JSInterop.IJSRuntime JS
+
+<PageTitle>Home Page</PageTitle>
+
+<h1>Welcome to EventEase Event Manager!</h1>
+
+Here is the list of upcoming events:
+
+<ul class="list-group">
+@foreach (EventItem evt in EventList ?? new List<EventItem>())
+{
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <div><strong>@evt.Name</strong></div>
+            <div class="text-muted">@(evt.Date.HasValue ? evt.Date.Value.ToString("MMMM d, yyyy") : "") — @evt.Location</div>
+        </div>
+        <NavLink class="btn btn-sm btn-primary" href="@($"/event/{Uri.EscapeDataString(evt.Name)}")">View Details</NavLink>
+        <NavLink class="btn btn-sm btn-outline-secondary ms-2" href="@($"/register/{Uri.EscapeDataString(evt.Name)}")">Register</NavLink>
+        <button class="btn btn-sm btn-danger ms-2" @onclick="async () => await RemoveEvent(evt)">Remove</button>
+        
+    </li>
+}
+</ul>
+<div class="mt-4">
+    <NavLink class="btn btn-success" href="/add-event">Add New Event</NavLink>
+</div>
+
+@code {
+    private List<EventItem>? EventList;
+
+    protected override void OnInitialized()
+    {
+        EventList = EventService.GetEvents().ToList();
+    }
+
+    private async Task RemoveEvent(EventItem evt)
+    {
+        if (evt == null) return;
+
+        bool confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to remove the event '{evt.Name}'?");
+        if (!confirmed) return;
+
+        if (EventService.RemoveEvent(evt))
+        {
+            EventList = EventService.GetEvents().ToList();
+            StateHasChanged();
+        }
+    }
+}

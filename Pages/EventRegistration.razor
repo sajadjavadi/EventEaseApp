@@ -1,0 +1,60 @@
+@page "/register/{EventName}"
+@using System.ComponentModel.DataAnnotations
+@using EventEaseApp.Services
+@inject EventService EventService
+@inject NavigationManager Navigation
+
+<PageTitle>Register for Event</PageTitle>
+
+<h3>Register for: @EventName</h3>
+
+<EditForm Model="registration" OnValidSubmit="HandleValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="mb-3">
+		<label class="form-label">Name</label>
+		<InputText class="form-control" @bind-Value="registration.Name" />
+		<ValidationMessage For="@(() => registration.Name)" />
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">Email</label>
+		<InputText class="form-control" type="email" @bind-Value="registration.Email" />
+		<ValidationMessage For="@(() => registration.Email)" />
+	</div>
+
+	<button type="submit" class="btn btn-primary">Register</button>
+	<NavLink class="btn btn-secondary ms-2" href="@($"/event/{Uri.EscapeDataString(EventName)}")">Back to Event</NavLink>
+</EditForm>
+
+@code {
+	[Parameter]
+	public string EventName { get; set; } = string.Empty;
+
+	private RegistrationModel registration = new RegistrationModel();
+
+	private void HandleValidSubmit()
+	{
+		var participant = new Participant
+		{
+			Name = registration.Name,
+			Email = registration.Email
+		};
+
+		EventService.AddParticipant(EventName, participant);
+
+		Navigation.NavigateTo($"/event/{Uri.EscapeDataString(EventName)}");
+	}
+
+	public class RegistrationModel
+	{
+		[Required(ErrorMessage = "Name is required")]
+		public string Name { get; set; } = string.Empty;
+
+		[Required(ErrorMessage = "Email is required")]
+		[EmailAddress(ErrorMessage = "Invalid email address")]
+		public string Email { get; set; } = string.Empty;
+	}
+}
+
