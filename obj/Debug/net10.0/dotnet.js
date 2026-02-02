@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "EventEaseApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-pMs0Lb7IY9OMhk/fFl+szAnQi2YzrWOu19FClWSAlnk=",
+    "hash": "sha256-EIeueRT7h1T90hpiB+ryFg5oewvCwAl+Pvv0imt/0q0=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.cs8mcre4gh.js"
@@ -20,23 +20,6 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       {
         "name": "dotnet.native.muve7a13r4.wasm",
         "integrity": "sha256-vjddPOzSD1RO9Een4QrlAPnxzBSmD/QchBKKmBMLZwg="
-      }
-    ],
-    "icu": [
-      {
-        "virtualPath": "icudt_CJK.dat",
-        "name": "icudt_CJK.tjcz0u77k5.dat",
-        "integrity": "sha256-SZLtQnRc0JkwqHab0VUVP7T3uBPSeYzxzDnpxPpUnHk="
-      },
-      {
-        "virtualPath": "icudt_EFIGS.dat",
-        "name": "icudt_EFIGS.tptq2av103.dat",
-        "integrity": "sha256-8fItetYY8kQ0ww6oxwTLiT3oXlBwHKumbeP2pRF4yTc="
-      },
-      {
-        "virtualPath": "icudt_no_CJK.dat",
-        "name": "icudt_no_CJK.lfu7j35m59.dat",
-        "integrity": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
       }
     ],
     "coreAssembly": [
@@ -1039,15 +1022,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "EventEaseApp.wasm",
-        "name": "EventEaseApp.tnrer1vjb5.wasm",
-        "integrity": "sha256-dy3WJpDYatGlfeqsEojWu11tLgGW9d1jpp0b77eqEn8="
+        "name": "EventEaseApp.l82u60jlf0.wasm",
+        "integrity": "sha256-1ZwHpQM/nQEnCRBqnbvdk3irtmHk6fX0XDfMyXEA+og="
       }
     ],
     "pdb": [
       {
         "virtualPath": "EventEaseApp.pdb",
-        "name": "EventEaseApp.xzd85w4qye.pdb",
-        "integrity": "sha256-I6KMhnXZ/BbgOIknbtO3vXY0CAdtXWFa5I3zN1J2p7I="
+        "name": "EventEaseApp.ev559qd93n.pdb",
+        "integrity": "sha256-BvK9YBbVM4f1W9Ayz4qafS8RuQYSepoi2f87EUHpwn4="
       }
     ],
     "libraryInitializers": [
@@ -1062,7 +1045,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
     ]
   },
   "debugLevel": -1,
-  "globalizationMode": "sharded",
+  "globalizationMode": "invariant",
   "extensions": {
     "blazor": {}
   },
@@ -1079,8 +1062,9 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "System.Diagnostics.Metrics.Meter.IsSupported": false,
         "System.Diagnostics.Tracing.EventSource.IsSupported": false,
         "System.GC.Server": true,
-        "System.Globalization.Invariant": false,
+        "System.Globalization.Invariant": true,
         "System.TimeZoneInfo.Invariant": false,
+        "System.Globalization.PredefinedCulturesOnly": true,
         "System.Linq.Enumerable.IsSizeOptimized": true,
         "System.Net.Http.EnableActivityPropagation": false,
         "System.Net.Http.WasmEnableStreamingResponse": true,
